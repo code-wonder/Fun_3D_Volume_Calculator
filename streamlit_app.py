@@ -1,14 +1,14 @@
 import streamlit as st
 import math
 
-st.title("Fun 3D Volume Calculator :rocket:")
-st.write("Let's start to find the volume of Geometry.")
+# --- PENGATURAN HALAMAN ---
+# Konfigurasi ini opsional, tapi bagus untuk mengatur judul tab browser dan icon
+st.set_page_config(page_title="Volume Calculator", page_icon="🚀", layout="centered")
 
 # --- KUMPULAN FUNCTION VOLUME ---
 def volume_kubus():
     st.subheader('Mencari Volume Kubus')
     sisi = st.number_input("Masukkan panjang sisi kubus (cm): ", min_value=0.0, step=1.0)
-    # st.success digunakan agar hasil tampil lebih cantik dengan kotak warna hijau
     st.success(f"Volume kubus adalah: {sisi * sisi * sisi:.2f} cm\u00b3")
     
 def volume_balok():
@@ -56,18 +56,29 @@ def volume_kerucut():
     hasil = 1/3 * math.pi * (jari_jari**2) * tinggi_kerucut
     st.success(f"Volume kerucut adalah: {hasil:.2f} cm\u00b3")
 
-# --- BAGIAN MENU UTAMA ---
-st.divider() # Membuat garis pembatas
-st.write("### Pilih Bangun Ruang")
+# --- BAGIAN SIDEBAR (MENU KIRI) ---
+st.sidebar.title("Menu Utama 🛠️")
+st.sidebar.write("Silakan pilih bangun ruang yang ingin dihitung:")
 
-# Menggunakan selectbox sebagai ganti input angka 1-7
-pilihan = st.selectbox(
-    "Bangun ruang apa yang ingin kamu hitung volumenya?",
-    ("Pilih...", "Kubus", "Balok", "Tabung", "Bola", "Prisma Segitiga", "Limas", "Kerucut")
+# Menggunakan st.sidebar.selectbox agar dropdown muncul di panel kiri
+pilihan = st.sidebar.selectbox(
+    "Pilih Bangun Ruang:",
+    ("Halaman Utama", "Kubus", "Balok", "Tabung", "Bola", "Prisma Segitiga", "Limas", "Kerucut")
 )
 
-# Mengeksekusi function berdasarkan pilihan di selectbox
-if pilihan == "Kubus":
+# Menambahkan info tambahan di sidebar bagian bawah
+st.sidebar.divider()
+st.sidebar.info("Aplikasi dibuat oleh ... 😎")
+
+# --- BAGIAN HALAMAN UTAMA (TENGAH) ---
+st.title("Fun 3D Volume Calculator 🚀")
+
+# Mengeksekusi function berdasarkan pilihan di sidebar
+if pilihan == "Halaman Utama":
+    st.write("Selamat datang! 👋")
+    st.write("Silakan buka panel di sebelah kiri (Sidebar) untuk memilih bentuk geometri yang ingin kamu hitung volumenya.")
+    st.image("https://images.unsplash.com/photo-1509228468518-180dd4864904?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", caption="Let's Calculate Geometry!")
+elif pilihan == "Kubus":
     volume_kubus()
 elif pilihan == "Balok":
     volume_balok()
